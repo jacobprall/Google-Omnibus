@@ -14,6 +14,10 @@ import Form from "react-bootstrap/Form";
 const Home = () => {
   const [searchState, setSearchState] = useState({ searchQuery: "" });
   console.log(searchState);
+
+  const [bookState, setBookState] = useState({ searchsubmitted: false });
+  console.log(bookState + "bookstate");
+
   function handleChange(event) {
     const { name, value } = event.target;
     setSearchState({
@@ -23,8 +27,13 @@ const Home = () => {
   }
 
   function submitSearch(event) {
+    console.log("click");
     event.preventDefault();
-
+    // const node = document.getElementById("b");
+    // const booksApi = ReactDOM.findDOMNode(node);
+    // console.log(booksApi);
+    // booksApi.setAttribute("searchSubmitted", "true");
+    setBookState({ searchsubmitted: true });
     // const searchInput = searchState.searchQuery;
 
     // return searchInput;
@@ -44,7 +53,12 @@ const Home = () => {
             onChange={handleChange}
           />
         </Form.Group>
-        <BookSearch searchSubmitted={false} data={searchState.searchQuery} />
+
+        <BookSearch
+          id="b"
+          searchsubmitted={bookState.searchsubmitted}
+          data={searchState.searchQuery}
+        />
         <Button variant="primary" type="submit">
           Submit
         </Button>

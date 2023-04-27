@@ -3,9 +3,10 @@ const key = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
 // const searchQuery = "baseball";
 
 const BookSearch = (searchQuery, searchSubmitted) => {
-  var apiURL = url + searchQuery + "&maxResults=19" + "&key=" + key;
-
-  if (searchSubmitted) {
+  const apiURL = url + searchQuery + "&maxResults=1" + "&key=" + key;
+  console.log("books search query" + { searchQuery });
+  console.log("search submited" + { searchSubmitted });
+  if ({ searchSubmitted } == "true") {
     fetch(apiURL)
       .then(function (response) {
         return response.json();
@@ -22,7 +23,7 @@ const BookSearch = (searchQuery, searchSubmitted) => {
         }
       });
   } else {
-    return null;
+    console.log("booksApi has not been selected");
   }
 };
 
