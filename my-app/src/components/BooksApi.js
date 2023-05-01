@@ -1,24 +1,24 @@
 import React, { useState, useEffect, Component } from "react";
+import Card from "react-bootstrap/Card";
+import ReactDOM from "react-dom";
 const url = "https://www.googleapis.com/books/v1/volumes?q=";
 const key = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
 // import Button from "react-bootstrap/Button";
-// import Card from "react-bootstrap/Card";
-
-// <Card style={{ width: '18rem' }}>
-//   <Card.Img variant="top" src="holder.js/100px180" />
-//   <Card.Body>
-//     <Card.Title>Card Title</Card.Title>
-//     <Card.Text>
-//       Some quick example text to build on the card title and make up the
-//       bulk of the card's content.
-//     </Card.Text>
-//     <Button variant="primary">Go somewhere</Button>
-//   </Card.Body>
-// </Card>
 
 function BookSearch(searchQuery) {
-  const apiURL = url + searchQuery + "&maxResults=1" + "&key=" + key;
-  console.log("books search query" + { searchQuery });
+  console.log(searchQuery);
+  const query = searchQuery.data;
+  const apiURL = url + query + "&maxResults=1" + "&key=" + key;
+  console.log(apiURL);
+  console.log(searchQuery + "search query");
+  //   const node = document.getElementById("bookCard");
+  //   const bookCard = ReactDOM.findDOMNode(node);
+  //   const [bookState, setBookState] = useState({
+  //     bookTitle: "",
+  //     bookAuthor: "",
+  //     bookDescription: "",
+  //   });
+
   // const [data, setData] = useState([]);
   fetch(apiURL)
     .then(function (response) {
@@ -27,14 +27,31 @@ function BookSearch(searchQuery) {
     .then(function (data) {
       console.log(data);
       const bookDataArr = data.items;
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 1; i++) {
         console.log(bookDataArr);
-        let book = bookDataArr[i];
+        let book = bookDataArr[0];
         let bookInfo = book.volumeInfo;
         let bookTitle = bookInfo.title;
-        console.log(bookTitle);
+        // setBookState((bookState.bookTitle = bookInfo.title));
       }
     });
+  // for (let i = 0; i < 4; i++) {
+
+  // }
+  //   }
+  // }
+  // );
+
+  return (
+    <div id="bookCard">
+      <Card>
+        <Card.Body>
+          <Card.Title>Title here</Card.Title>
+          {/* <Card.Title>{bookState.bookTitle}</Card.Title> */}
+        </Card.Body>
+      </Card>
+    </div>
+  );
 }
 //   useEffect(() => {
 //     localStorage.setItem("dataKey", JSON.stringify(data));

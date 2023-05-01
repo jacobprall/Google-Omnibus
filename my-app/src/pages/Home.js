@@ -6,9 +6,9 @@ import Form from "react-bootstrap/Form";
 
 const Home = () => {
   const [searchState, setSearchState] = useState({ searchQuery: "" });
-  console.log({ searchState } + "search state 9 home js");
+  console.log(searchState);
 
-  //   console.log(searchQueryRender.searchSent + "search query render home 14");
+  const [sentState, setSentState] = useState({ sent: false });
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -16,20 +16,19 @@ const Home = () => {
       ...searchState,
       [name]: value,
     });
+    console.log(searchState);
   }
 
   function submitSearch(event) {
     console.log("click");
     event.preventDefault();
-    // setSearchQueryRender((searchQueryRender.searchSent = true));
-    // console.log(searchQueryRender.searchSent);
 
-    BookSearch(searchState.searchQuery);
+    setSentState(true);
+    console.log({ searchState } + "searchState");
   }
 
   return (
     <>
-      {console.log("search sent")}
       <h1></h1>
       <Form onSubmit={submitSearch}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -43,7 +42,12 @@ const Home = () => {
           />
         </Form.Group>
 
-        {/* {BookSearch(searchState.searchQuery)} */}
+        {sentState == true ? (
+          <BookSearch data={searchState.searchQuery} />
+        ) : (
+          console.log("search not sent")
+        )}
+
         <Button variant="primary" type="submit">
           Submit
         </Button>
