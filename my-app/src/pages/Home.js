@@ -3,6 +3,7 @@ import BookSearch from "../components/BooksApi";
 import ReactDOM from "react-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import RenderResult from "../components/BooksApi";
 
 const Home = () => {
   const [searchState, setSearchState] = useState({ searchQuery: "" });
@@ -43,7 +44,7 @@ const Home = () => {
         </Form.Group>
 
         {sentState == true ? (
-          <BookSearch data={searchState.searchQuery} />
+          <RenderResult data={searchState.searchQuery} />
         ) : (
           console.log("search not sent")
         )}
