@@ -28,57 +28,68 @@ const key = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
 let bookDataArr = [];
 // const [data, setData] = useState([]);
 
-const callBooksApi = async (searchQuery) => {
-  const query = searchQuery.data;
-  const apiURL = url + query + "&maxResults=3" + "&key=" + key;
-  let response = await fetch(apiURL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      //   let bookDataArr = [];
-      console.log(data);
-      let bookDataArr = data.items;
-
-      function titleFunction(bookDataArr) {
-        return bookDataArr.volumeInfo.title;
-      }
-      const titleArr = bookDataArr.map(titleFunction);
-
-      //   console.log([{ bookDataArr }] + "array");
-      //   for (let i = 0; i < 2; i++) {
-      //     console.log(bookData);
-      //     let title = bookData[i].volumeInfo.title;
-
-      //     console.log(title);
-      //     // let bookInfo = book.volumeInfo;
-      //     // let title = bookInfo.title;
-      //     // bookDataArr.push(title);
-      //     // console.log(bookDataArr + " bookdata Arr");
-      //     // let author = [bookInfo.authors];
-      //     // let description = bookInfo.description;
-      //     return title;
-      //   }
-      return titleArr;
-    });
-  //   const jsonResponse = await response.json();
-  //   return JSON.stringify(jsonResponse);
-  return [response];
-};
 function RenderResult(searchQuery) {
-  const [apiResponse, setApiResponse] = useState("loading...");
+  const [apiResponse, setApiResponse] = useState([]);
   useEffect(() => {
-    console.log(searchQuery);
-    callBooksApi(searchQuery).then((result) =>
-      setApiResponse(([apiResponse] = result.title)).then(
-        console.log(apiResponse)
-      )
-    );
+    callBooksApi(searchQuery);
+    // console.log(searchQuery);
+    // callBooksApi(searchQuery).then((response) =>
+    //   setApiResponse(response.json())
+    // );
   }, []);
+  const callBooksApi = async (searchQuery) => {
+    const query = searchQuery.data;
+    const apiURL = url + query + "&maxResults=3" + "&key=" + key;
+    const response = await fetch(apiURL);
+    // console.log(await response.json());
+    const jsonResponse = await response.json();
+    // console.log(jsonResponse.items);
+    const items = jsonResponse.items;
+    setApiResponse(items);
+
+    // .then(function (response) {
+    //   return response.json();
+    // })
+    // .then(function (data) {
+    //   //   let bookDataArr = [];
+    //   console.log(data);
+    //   let bookDataArr = data.items;
+
+    //   function titleFunction(bookDataArr) {
+    //     return bookDataArr.volumeInfo.title;
+    //   }
+    //   const titleArr = bookDataArr.map(titleFunction);
+    //   console.log(titleArr);
+    //   console.log([{ bookDataArr }] + "array");
+    //   for (let i = 0; i < 2; i++) {
+    //     console.log(bookData);
+    //     let title = bookData[i].volumeInfo.title;
+
+    //     console.log(title);
+    //     // let bookInfo = book.volumeInfo;
+    //     // let title = bookInfo.title;
+    //     // bookDataArr.push(title);
+    //     // console.log(bookDataArr + " bookdata Arr");
+    //     // let author = [bookInfo.authors];
+    //     // let description = bookInfo.description;
+    //     return title;
+    //   }
+    //       return titleArr;
+    //     });
+    //   //   const jsonResponse = await response.json();
+    //   //   return JSON.stringify(jsonResponse);
+    //   return response;
+  };
   console.log(apiResponse);
   return (
     <div>
-      <p>{apiResponse}</p>
+      {apiResponse.map((data) => {
+        return (
+          <li className="Name" key={data.id} title={data.title}>
+            {data.volumeInfo.title}
+          </li>
+        );
+      })}
     </div>
   );
   //   }
