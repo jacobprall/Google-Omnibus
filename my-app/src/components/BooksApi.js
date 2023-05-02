@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Component } from "react";
 import Card from "react-bootstrap/Card";
 import ReactDOM from "react-dom";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 const url = "https://www.googleapis.com/books/v1/volumes?q=";
 const key = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
 // import Button from "react-bootstrap/Button";
@@ -39,7 +41,7 @@ function RenderResult(searchQuery) {
   }, []);
   const callBooksApi = async (searchQuery) => {
     const query = searchQuery.data;
-    const apiURL = url + query + "&maxResults=3" + "&key=" + key;
+    const apiURL = url + query + "&maxResults=9" + "&key=" + key;
     const response = await fetch(apiURL);
     // console.log(await response.json());
     const jsonResponse = await response.json();
@@ -81,16 +83,34 @@ function RenderResult(searchQuery) {
     //   return response;
   };
   console.log(apiResponse);
+
   return (
-    <div>
-      {apiResponse.map((data) => {
-        return (
-          <li className="Name" key={data.id} title={data.title}>
-            {data.volumeInfo.title}
-          </li>
-        );
-      })}
-    </div>
+    <>
+      <Row>
+        {apiResponse.map((data) => {
+          return (
+            <Col xs={12} md={4} lg={3}>
+              <Card key={data.id} className="bookCard">
+                <Card.Img
+                  variant="top"
+                  className="cardImg"
+                  src={data.volumeInfo.imageLinks.thumbnail}
+                />
+                <Card.Body>
+                  <Card.Title>{data.volumeInfo.title}</Card.Title>
+                  <Card.Text>{data.volumeInfo.authors}</Card.Text>
+                  <Card.Text>{data.volumeInfo.description}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            //   <li className="Name"  title={data.title}>
+            //
+            //   </li>
+          );
+        })}
+      </Row>
+    </>
   );
   //   }
 

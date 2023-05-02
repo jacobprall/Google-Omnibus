@@ -1,4 +1,10 @@
-#bookCard {
-    max-width: 10%;
+.bookCard {
+    /* max-width: 30%; */
+    max-height: 180vh;
     border: 2px solid black;
+    margin: 2%;
+    padding:3%
+}
+.cardImg {
+    max-height: 140vh;
 }

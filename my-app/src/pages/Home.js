@@ -4,6 +4,9 @@ import ReactDOM from "react-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import RenderResult from "../components/BooksApi";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const Home = () => {
   const [searchState, setSearchState] = useState({ searchQuery: "" });
@@ -42,17 +45,17 @@ const Home = () => {
             onChange={handleChange}
           />
         </Form.Group>
-
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+      <Container>
         {sentState == true ? (
           <RenderResult data={searchState.searchQuery} />
         ) : (
           console.log("search not sent")
         )}
-
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+      </Container>
     </>
   );
 };
