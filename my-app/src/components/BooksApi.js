@@ -3,9 +3,10 @@ import Card from "react-bootstrap/Card";
 import ReactDOM from "react-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
+import SingleBook from "../components/SingleBook";
 const url = "https://www.googleapis.com/books/v1/volumes?q=";
 const key = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
-// import Button from "react-bootstrap/Button";
 
 // function BookSearch(searchQuery) {
 // console.log(searchQuery);
@@ -39,6 +40,22 @@ function RenderResult(searchQuery) {
     //   setApiResponse(response.json())
     // );
   }, []);
+
+  //   const [bookClicked, setBookClicked] = useState({ selectedBook: "" });
+
+  const HandleBookClick = (event) => {
+    const json = JSON.stringify(event.toString());
+    console.log(event);
+    console.log({ json });
+
+    // const { name, key } = event.target;
+    // console.log(key);
+    // event.preventDefault();
+    // console.log(event.target);
+    // setBookClicked({ name: key });
+    // console.log(bookClicked);
+    // setBookClicked();
+  };
   const callBooksApi = async (searchQuery) => {
     const query = searchQuery.data;
     const apiURL = url + query + "&maxResults=9" + "&key=" + key;
@@ -91,15 +108,29 @@ function RenderResult(searchQuery) {
           return (
             <Col xs={12} md={4} lg={3}>
               <Card key={data.id} className="bookCard">
-                <Card.Img
-                  variant="top"
-                  className="cardImg"
-                  src={data.volumeInfo.imageLinks.thumbnail}
-                />
+                {!data.volumeInfo.imageLinks.thumbnail ? (
+                  <Card.Text> no image </Card.Text>
+                ) : (
+                  <Card.Img
+                    variant="top"
+                    className="cardImg"
+                    src={data.volumeInfo.imageLinks.thumbnail}
+                  />
+                )}
+
                 <Card.Body>
                   <Card.Title>{data.volumeInfo.title}</Card.Title>
                   <Card.Text>{data.volumeInfo.authors}</Card.Text>
-                  <Card.Text>{data.volumeInfo.description}</Card.Text>
+                  <Card.Text>{data.volumeInfo.categories}</Card.Text>
+                  <Card.Text>{data.volumeInfo.pageCount} pages</Card.Text>
+                  <Card.Text>{data.id}</Card.Text>
+                  <Button
+                    name="selectedBook"
+                    value={data.id}
+                    onClick={(e) => HandleBookClick(e.target.value)}
+                  >
+                    Read more
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>
