@@ -32,6 +32,8 @@ let bookDataArr = [];
 // const [data, setData] = useState([]);
 
 function RenderResult(searchQuery) {
+  const [currentPage, setCurrentPage] = useState("Books");
+  //   const [bookClicked, setBookClicked] = useState(false);
   const [apiResponse, setApiResponse] = useState([]);
   useEffect(() => {
     callBooksApi(searchQuery);
@@ -41,30 +43,39 @@ function RenderResult(searchQuery) {
     // );
   }, []);
 
-  //   const [bookClicked, setBookClicked] = useState({ selectedBook: "" });
+  function pageChanger(e) {
+    SingleBook(e.target.value);
+    setCurrentPage("SingleBook");
+    console.log("page");
+  }
 
-  const HandleBookClick = (event) => {
-    const json = JSON.stringify(event.toString());
-    console.log(event);
-    console.log({ json });
+  //   const renderPage = () => {
+  //
+  //   };
 
-    // const { name, key } = event.target;
-    // console.log(key);
-    // event.preventDefault();
-    // console.log(event.target);
-    // setBookClicked({ name: key });
-    // console.log(bookClicked);
-    // setBookClicked();
-  };
+  //   const HandleBookClick = (event) => {
+  //     const data = JSON.stringify(event.toString());
+  //     console.log(event);
+  //     console.log({ data });
+  //     SingleBook(data);
+  //     setCurrentPage("SingleBook");
+  //     renderPage();
+  //     // setBookClicked(true);
+  //   };
   const callBooksApi = async (searchQuery) => {
     const query = searchQuery.data;
     const apiURL = url + query + "&maxResults=9" + "&key=" + key;
-    const response = await fetch(apiURL);
-    // console.log(await response.json());
-    const jsonResponse = await response.json();
-    // console.log(jsonResponse.items);
-    const items = jsonResponse.items;
-    setApiResponse(items);
+
+    try {
+      const response = await fetch(apiURL);
+      console.log(response);
+      const jsonResponse = await response.json();
+      const items = jsonResponse.items;
+      console.log(items);
+      setApiResponse(items);
+    } catch (err) {
+      alert(err);
+    }
 
     // .then(function (response) {
     //   return response.json();
@@ -103,44 +114,51 @@ function RenderResult(searchQuery) {
 
   return (
     <>
-      <Row>
-        {apiResponse.map((data) => {
-          return (
-            <Col xs={12} md={4} lg={3}>
-              <Card key={data.id} className="bookCard">
-                {!data.volumeInfo.imageLinks.thumbnail ? (
-                  <Card.Text> no image </Card.Text>
-                ) : (
-                  <Card.Img
-                    variant="top"
-                    className="cardImg"
-                    src={data.volumeInfo.imageLinks.thumbnail}
-                  />
-                )}
+      {currentPage == "SingleBook" ? (
+        <SingleBook />
+      ) : (
+        <Row>
+          {console.log(apiResponse)}
+          {apiResponse.map((data) => {
+            return (
+              <Col xs={12} md={4} lg={3}>
+                <Card key={data.id} className="bookCard">
+                  {!data.volumeInfo.imageLinks.thumbnail ? (
+                    <Card.Text> no image </Card.Text>
+                  ) : (
+                    <Card.Img
+                      variant="top"
+                      className="cardImg"
+                      src={data.volumeInfo.imageLinks.thumbnail}
+                    />
+                  )}
 
-                <Card.Body>
-                  <Card.Title>{data.volumeInfo.title}</Card.Title>
-                  <Card.Text>{data.volumeInfo.authors}</Card.Text>
-                  <Card.Text>{data.volumeInfo.categories}</Card.Text>
-                  <Card.Text>{data.volumeInfo.pageCount} pages</Card.Text>
-                  <Card.Text>{data.id}</Card.Text>
-                  <Button
-                    name="selectedBook"
-                    value={data.id}
-                    onClick={(e) => HandleBookClick(e.target.value)}
-                  >
-                    Read more
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
+                  <Card.Body>
+                    <Card.Title>{data.volumeInfo.title}</Card.Title>
+                    <Card.Text>{data.volumeInfo.authors}</Card.Text>
+                    <Card.Text>{data.volumeInfo.categories}</Card.Text>
+                    <Card.Text>{data.volumeInfo.pageCount} pages</Card.Text>
+                    <Card.Text>{data.id}</Card.Text>
 
-            //   <li className="Name"  title={data.title}>
-            //
-            //   </li>
-          );
-        })}
-      </Row>
+                    <Button
+                      name="selectedBook"
+                      value={data.id}
+                      // onClick={HandleBookClick}
+                      onClick={(e) => pageChanger(e)}
+                    >
+                      Read more
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+
+              //   <li className="Name"  title={data.title}>
+              //
+              //   </li>
+            );
+          })}
+        </Row>
+      )}
     </>
   );
   //   }
