@@ -1,34 +1,55 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import getSingleBook from "../../utils/getSingleBook";
+// import getSingleBook from "../../utils/getSingleBook";
 
-const SingleBook = (chooseBook) => {
-  console.log(chooseBook);
+const SingleBook = () => {
+  const [items, setItems] = useState([]);
 
-  //   console.log(data);
-  //   const [bookQuery, setBookQuery] = useState("");
-  //   setBookQuery(data);
+  useEffect(() => {
+    let searchQuery = "";
+    console.log("test");
+    setItems(JSON.parse(localStorage.getItem("items")));
+    // const idNum = JSON.parse(localStorage.getItem("items"));
+    // console.log(idNum);
+    // if (idNum) {
+    //   setItems(idNum);
+    // }
+    // console.log(idNum);
+    // searchQuery = items;
 
-  //   const [apiResponse, setApiResponse] = useState([]);
-  //   const [show, setShow] = useState(false);
-  //   const url = "https://www.googleapis.com/books/v1/volumes/";
-  //   const key = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
-  //   const apiURL = url + bookQuery + "?key=" + key;
+    // console.log(searchQuery);
+  }, []);
 
-  //   console.log(data + "single book");
+  // return (
+  //   <>
+  //     <getSingleBook bookQuery={items} />
+  //   </>
+  // );
+
+  // SingleBookApi(items);
+
+  // const bookQuery = items;
+  console.log(items);
+  // const [bookQuery, setBookQuery] = useState("");
+  // setBookQuery(items);
+
+  const [apiResponse, setApiResponse] = useState([]);
+  // const [show, setShow] = useState(false);
+  // function SingleBookApi(searchQuery) {
+  const url = "https://www.googleapis.com/books/v1/volumes/";
+  const key = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
+  const apiURL = url + items + "?key=" + key;
+
   //   console.log(apiURL);
 
-  //   try {
-  //     const response = fetch(apiURL);
-  //     const jsonResponse = response.json();
-  //     console.log(jsonResponse);
-  //     const items = jsonResponse.items;
-  //     console.log(items);
-  //     setApiResponse(items);
-  //   } catch (err) {
-  //     alert(err);
-  //   }
+  useEffect(() => {
+    fetch(apiURL)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  });
 
   //   const handleClose = () => setShow(false);
   //   const handleShow = () => setShow(true);
@@ -59,6 +80,7 @@ const SingleBook = (chooseBook) => {
   return (
     <>
       <h1>Single Book</h1>
+      <Button href="/">Go Home</Button>
     </>
   );
 };

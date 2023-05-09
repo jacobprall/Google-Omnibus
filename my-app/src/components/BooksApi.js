@@ -24,11 +24,12 @@ function RenderResult(searchQuery) {
   }, []);
 
   function BookSelector(e) {
-    setIsClicked(true);
+    // setIsClicked(true);
     // const [clickedBook, setClickedBook] = useState(e.target.value);
     // setSelectedBook(e);
     console.log(e);
     setItems(e);
+    window.location = "/singlebook";
   }
 
   //   const chooseBook = (book) => {
@@ -54,47 +55,43 @@ function RenderResult(searchQuery) {
 
   return (
     <>
-      {isclicked == true ? (
-        <SingleBook />
-      ) : (
-        <Row>
-          {console.log(apiResponse)}
-          {apiResponse.map((data) => {
-            return (
-              <Col xs={12} md={4} lg={3}>
-                <Card key={data.id} className="bookCard">
-                  {!data.volumeInfo.imageLinks.thumbnail ? (
-                    <Card.Text> no image </Card.Text>
-                  ) : (
-                    <Card.Img
-                      variant="top"
-                      className="cardImg"
-                      src={data.volumeInfo.imageLinks.thumbnail}
-                    />
-                  )}
+      <Row>
+        {console.log(apiResponse)}
+        {apiResponse.map((data) => {
+          return (
+            <Col xs={12} md={4} lg={3}>
+              <Card key={data.id} className="bookCard">
+                {!data.volumeInfo.imageLinks.thumbnail ? (
+                  <Card.Text> no image </Card.Text>
+                ) : (
+                  <Card.Img
+                    variant="top"
+                    className="cardImg"
+                    src={data.volumeInfo.imageLinks.thumbnail}
+                  />
+                )}
 
-                  <Card.Body>
-                    <Card.Title>{data.volumeInfo.title}</Card.Title>
-                    <Card.Text>{data.volumeInfo.authors}</Card.Text>
-                    <Card.Text>{data.volumeInfo.categories}</Card.Text>
-                    <Card.Text>{data.volumeInfo.pageCount} pages</Card.Text>
-                    <Card.Text>{data.id}</Card.Text>
+                <Card.Body>
+                  <Card.Title>{data.volumeInfo.title}</Card.Title>
+                  <Card.Text>{data.volumeInfo.authors}</Card.Text>
+                  <Card.Text>{data.volumeInfo.categories}</Card.Text>
+                  <Card.Text>{data.volumeInfo.pageCount} pages</Card.Text>
+                  <Card.Text>{data.id}</Card.Text>
 
-                    <Button
-                      name="selectedBook"
-                      value={data.id}
-                      // onClick={HandleBookClick}
-                      onClick={(e) => BookSelector(e.target.value)}
-                    >
-                      Read more
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      )}
+                  <Button
+                    name="selectedBook"
+                    value={data.id}
+                    // onClick={HandleBookClick}
+                    onClick={(e) => BookSelector(e.target.value)}
+                  >
+                    Read more
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          );
+        })}
+      </Row>
     </>
   );
 }
