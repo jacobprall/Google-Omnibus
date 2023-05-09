@@ -1,22 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import getSingleBook from "../../utils/getSingleBook";
 
-const SingleBook = (data) => {
+const SingleBook = (chooseBook) => {
+  console.log(chooseBook);
+
+  //   console.log(data);
+  //   const [bookQuery, setBookQuery] = useState("");
+  //   setBookQuery(data);
+
+  //   const [apiResponse, setApiResponse] = useState([]);
   //   const [show, setShow] = useState(false);
-  const url = "https://www.googleapis.com/books/v1/volumes/";
-  const key = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
-  const apiURL = url + data + "?key=" + key;
+  //   const url = "https://www.googleapis.com/books/v1/volumes/";
+  //   const key = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
+  //   const apiURL = url + bookQuery + "?key=" + key;
 
-  console.log(data + "single book");
-  console.log(apiURL);
+  //   console.log(data + "single book");
+  //   console.log(apiURL);
 
   //   try {
-  //   const response = await fetch(apiURL);
-  //   const jsonResponse = await response.json();
-  //   console.log(jsonResponse);
-  //   const items = jsonResponse.items;
-  //   console.log(items);
+  //     const response = fetch(apiURL);
+  //     const jsonResponse = response.json();
+  //     console.log(jsonResponse);
+  //     const items = jsonResponse.items;
+  //     console.log(items);
+  //     setApiResponse(items);
   //   } catch (err) {
   //     alert(err);
   //   }
@@ -49,7 +58,7 @@ const SingleBook = (data) => {
 
   return (
     <>
-      <h1>Single Book</h1>;
+      <h1>Single Book</h1>
     </>
   );
 };

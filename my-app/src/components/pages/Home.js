@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import BookSearch from "../components/BooksApi";
+import BookSearch from "../BooksApi";
 import ReactDOM from "react-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import RenderResult from "../components/BooksApi";
+import RenderResult from "../BooksApi";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

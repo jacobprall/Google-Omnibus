@@ -1,67 +1,40 @@
 import React, { useState, useEffect, Component } from "react";
+import { redirect } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import ReactDOM from "react-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-import SingleBook from "../components/SingleBook";
+import SingleBook from "./pages/SingleBook";
 const url = "https://www.googleapis.com/books/v1/volumes?q=";
 const key = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
 
-// function BookSearch(searchQuery) {
-// console.log(searchQuery);
-
-// console.log(apiURL);
-// console.log(searchQuery + "search query");
-//   const node = document.getElementById("bookCard");
-//   const bookCard = ReactDOM.findDOMNode(node);
-// const [bookState, setBookState] = useState({
-//   bookTitle: "",
-//   bookAuthor: "",
-//   bookDescription: "",
-// });
-
-// function handleChange(title, author, description) {
-//   // setBookTitle((bookTitle = title));
-//   // setBookState(
-//   //   (bookState.bookTitle = title)
-//   //   (bookState.bookAuthor = author)
-//   // );
-// }
-let bookDataArr = [];
-// const [data, setData] = useState([]);
-
 function RenderResult(searchQuery) {
-  const [currentPage, setCurrentPage] = useState("Books");
-  //   const [bookClicked, setBookClicked] = useState(false);
   const [apiResponse, setApiResponse] = useState([]);
+  const [isclicked, setIsClicked] = useState(false);
+  //   const [selectedBook, setSelectedBook] = useState("");
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [items]);
+
   useEffect(() => {
     callBooksApi(searchQuery);
-    // console.log(searchQuery);
-    // callBooksApi(searchQuery).then((response) =>
-    //   setApiResponse(response.json())
-    // );
   }, []);
 
-  function pageChanger(e) {
-    SingleBook(e.target.value);
-    setCurrentPage("SingleBook");
-    console.log("page");
+  function BookSelector(e) {
+    setIsClicked(true);
+    // const [clickedBook, setClickedBook] = useState(e.target.value);
+    // setSelectedBook(e);
+    console.log(e);
+    setItems(e);
   }
 
-  //   const renderPage = () => {
-  //
+  //   const chooseBook = (book) => {
+  //     setSelectedBook(book);
   //   };
 
-  //   const HandleBookClick = (event) => {
-  //     const data = JSON.stringify(event.toString());
-  //     console.log(event);
-  //     console.log({ data });
-  //     SingleBook(data);
-  //     setCurrentPage("SingleBook");
-  //     renderPage();
-  //     // setBookClicked(true);
-  //   };
   const callBooksApi = async (searchQuery) => {
     const query = searchQuery.data;
     const apiURL = url + query + "&maxResults=9" + "&key=" + key;
@@ -76,45 +49,12 @@ function RenderResult(searchQuery) {
     } catch (err) {
       alert(err);
     }
-
-    // .then(function (response) {
-    //   return response.json();
-    // })
-    // .then(function (data) {
-    //   //   let bookDataArr = [];
-    //   console.log(data);
-    //   let bookDataArr = data.items;
-
-    //   function titleFunction(bookDataArr) {
-    //     return bookDataArr.volumeInfo.title;
-    //   }
-    //   const titleArr = bookDataArr.map(titleFunction);
-    //   console.log(titleArr);
-    //   console.log([{ bookDataArr }] + "array");
-    //   for (let i = 0; i < 2; i++) {
-    //     console.log(bookData);
-    //     let title = bookData[i].volumeInfo.title;
-
-    //     console.log(title);
-    //     // let bookInfo = book.volumeInfo;
-    //     // let title = bookInfo.title;
-    //     // bookDataArr.push(title);
-    //     // console.log(bookDataArr + " bookdata Arr");
-    //     // let author = [bookInfo.authors];
-    //     // let description = bookInfo.description;
-    //     return title;
-    //   }
-    //       return titleArr;
-    //     });
-    //   //   const jsonResponse = await response.json();
-    //   //   return JSON.stringify(jsonResponse);
-    //   return response;
   };
   console.log(apiResponse);
 
   return (
     <>
-      {currentPage == "SingleBook" ? (
+      {isclicked == true ? (
         <SingleBook />
       ) : (
         <Row>
@@ -144,45 +84,19 @@ function RenderResult(searchQuery) {
                       name="selectedBook"
                       value={data.id}
                       // onClick={HandleBookClick}
-                      onClick={(e) => pageChanger(e)}
+                      onClick={(e) => BookSelector(e.target.value)}
                     >
                       Read more
                     </Button>
                   </Card.Body>
                 </Card>
               </Col>
-
-              //   <li className="Name"  title={data.title}>
-              //
-              //   </li>
             );
           })}
         </Row>
       )}
     </>
   );
-  //   }
-
-  //   return (
-  //     <>
-  //       <p>Book returns</p>
-  //       {Object.keys(bookDataArr).map((key) => (
-  //         <p>{bookDataArr[key]}</p>
-  //       ))}
-  //       <p>{bookDataArr}</p>
-  //     </>
-  //     // <div id="bookCard">
-  //     //   <Card>
-  //     //     <Card.Body>
-  //     //       <Card.Title></Card.Title>
-  //     //       {/* <Card.Title>{bookState.bookTitle}</Card.Title> */}
-  //     //     </Card.Body>
-  //     //   </Card>
-  //     // </div>
-  //   );
 }
-//   useEffect(() => {
-//     localStorage.setItem("dataKey", JSON.stringify(data));
-//   }, [data]);
 
 export default RenderResult;
