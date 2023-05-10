@@ -11,33 +11,12 @@ const SingleBook = () => {
     let searchQuery = "";
     console.log("test");
     setItems(JSON.parse(localStorage.getItem("items")));
-    // const idNum = JSON.parse(localStorage.getItem("items"));
-    // console.log(idNum);
-    // if (idNum) {
-    //   setItems(idNum);
-    // }
-    // console.log(idNum);
-    // searchQuery = items;
-
-    // console.log(searchQuery);
   }, []);
 
-  // return (
-  //   <>
-  //     <getSingleBook bookQuery={items} />
-  //   </>
-  // );
-
-  // SingleBookApi(items);
-
-  // const bookQuery = items;
   console.log(items);
-  // const [bookQuery, setBookQuery] = useState("");
-  // setBookQuery(items);
 
   const [apiResponse, setApiResponse] = useState([]);
-  // const [show, setShow] = useState(false);
-  // function SingleBookApi(searchQuery) {
+
   const url = "https://www.googleapis.com/books/v1/volumes/";
   const key = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
   const apiURL = url + items + "?key=" + key;
@@ -49,8 +28,10 @@ const SingleBook = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        setApiResponse(data);
       });
-  });
+  }, []);
+  console.log(apiResponse);
 
   //   const handleClose = () => setShow(false);
   //   const handleShow = () => setShow(true);
@@ -81,7 +62,7 @@ const SingleBook = () => {
   return (
     <>
       <h1>Single Book</h1>
-      import Button from 'react-bootstrap/Button';
+
       <Card style={{ width: "18rem" }}>
         <Card.Img variant="top" src="holder.js/100px180" />
         <Card.Body>
