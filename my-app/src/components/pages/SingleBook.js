@@ -1,63 +1,41 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import { useGetBook } from '../../hooks/useGetBook';
+import { Heading, Card, CardBody, Stack, Divider, CardFooter, ButtonGroup, Button} from '@chakra-ui/react'
 
 const SingleBook = () => {
-  const { search } = window.location;
-  const searchParameters = new URLSearchParams(search);
-  const id = searchParameters.get('id');
-
   const {
     data
-  } = useGetBook(id);
-
-
-  console.log(data); // book object
-
-  //   const handleClose = () => setShow(false);
-  //   const handleShow = () => setShow(true);
-
-  //   return (
-  //     <>
-  //       <Button variant="primary" onClick={handleShow}>
-  //         Launch demo modal
-  //       </Button>
-
-  //       <Modal show={show} onHide={handleClose}>
-  //         <Modal.Header closeButton>
-  //           <Modal.Title>Modal heading</Modal.Title>
-  //         </Modal.Header>
-  //         <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-  //         <Modal.Footer>
-  //           <Button variant="secondary" onClick={handleClose}>
-  //             Close
-  //           </Button>
-  //           <Button variant="primary" onClick={handleClose}>
-  //             Save Changes
-  //           </Button>
-  //         </Modal.Footer>
-  //       </Modal>
-  //     </>
-  //   );
+  } = useGetBook();
 
   return (
-    <>
-      <h1>Single Book</h1>
-
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src="holder.js/100px180" />
-        <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-          <Button variant="primary">Go somewhere</Button>
-        </Card.Body>
-      </Card>
-      <Button href="/">Go Home</Button>
-    </>
+    <Card maxW='sm'>
+      <CardBody>
+        {/* <Image
+          src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
+          alt='Green double couch with wooden legs'
+          borderRadius='lg'
+        /> */}
+        <Stack mt='6' spacing='3'>
+          <Heading size='md'>{data.name}</Heading>
+          {/* <Text>
+            This sofa is perfect for modern tropical spaces, baroque inspired
+            spaces, earthy toned spaces and for people who love a chic design with a
+            sprinkle of vintage design.
+          </Text> */}
+          {/* <Text color='blue.600' fontSize='2xl'>
+            $450
+          </Text> */}
+        </Stack>
+      </CardBody>
+      <Divider />
+      <CardFooter>
+        <ButtonGroup spacing='2'>
+          <Button variant='solid' colorScheme='blue'>
+            Learn More
+          </Button>
+        </ButtonGroup>
+      </CardFooter>
+    </Card>
   );
 };
 

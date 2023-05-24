@@ -27,7 +27,8 @@ export const useSearch = () => {
     const handleChange = (e) => setQuery(e.target.value);
     const searchMaps = async () => ([])
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault()
         const books = await searchBooks(query);
         const locations = await searchMaps(query);
         console.log({ books })

@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import { useSearch } from '../../hooks/useSearch';
-import { Results } from '../Results';
+import { Results } from '../common/List';
 
 const Home = () => {
   const {
@@ -12,6 +12,8 @@ const Home = () => {
     handleChange,
     results,
   } = useSearch();
+
+  console.log({ query, results })
 
   return (
     <>
