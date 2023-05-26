@@ -12,7 +12,6 @@ import "./app.css";
 import SingleBook from "./components/pages/SingleBook";
 
 function App() {
-  const [selectedBook, setSelectedBook] = useState()
   return (
     <>
       <Router>

@@ -1,9 +1,11 @@
 
 import { useState, useEffect } from 'react'
+import { formatBook } from '../components/common/utils';
 
 const BOOKS_URL = "https://www.googleapis.com/books/v1/volumes?q=";
 const KEY = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
 
+const formatBookData = (data) => data.map(formatBook);
 
 const searchBooks = async (query) => {
    
@@ -29,9 +31,8 @@ export const useSearch = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const books = await searchBooks(query);
+        const books = formatBookData(await searchBooks(query));
         const locations = await searchMaps(query);
-        console.log({ books })
         // transform the data to conform to a standard
         setResults([...books, ...locations])
     }

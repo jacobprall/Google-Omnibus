@@ -1,9 +1,9 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { VStack } from "@chakra-ui/react";
 import Container from "react-bootstrap/Container";
 import { useSearch } from '../../hooks/useSearch';
-import { Results } from '../common/List';
+import { Results } from '../common/Results';
+import { Search } from "../common/Search";
 
 const Home = () => {
   const {
@@ -13,34 +13,20 @@ const Home = () => {
     results,
   } = useSearch();
 
-  console.log({ query, results })
-
   return (
-    <>
-      <h1></h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Search</Form.Label>
-          <Form.Control
-            name="searchQuery"
-            type="searchQuery"
-            placeholder="enter search here"
-            value={query}
-            onChange={handleChange}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+    <VStack mt="32px">
+      <Search 
+        handleChange={handleChange}
+        query={query}
+        handleSubmit={handleSubmit}
+      />
       <Container>
-        {results?.length === 0 ? (
-          <div>Please enter a search term to get started</div>
-        ) : (
+        {results?.length !== 0 && 
+        (
           <Results data={results} />
         )}
       </Container>
-    </>
+    </VStack>
   );
 };
 

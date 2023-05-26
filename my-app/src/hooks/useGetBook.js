@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { formatBook } from '../components/common/utils';
 
 export const useGetBook = () => {
     const { search } = window.location;
@@ -7,14 +8,16 @@ export const useGetBook = () => {
     const url = "https://www.googleapis.com/books/v1/volumes/";
     const key = "AIzaSyDyUh9tTZjRYDn1uNQbyK8fgrSAGsMKnW4";
     const apiURL = url + id + "?key=" + key;
+    console.log({ apiURL})
 
-    const [book, setBook] = useState();
+    const [book, setBook] = useState({});
 
     useEffect(() => {
       fetch(apiURL)
         .then((response) => response.json())
         .then((data) => {
-          setBook(data);
+          const formattedBook = formatBook(data);
+          setBook(formattedBook);
         });
     }, []);
 
